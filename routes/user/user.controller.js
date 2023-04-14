@@ -46,3 +46,7 @@ const register = async (req, res) => {
     .status(201)
     .json({ newUser: newUser, message: "User created successfully" });
 };
+
+module.exports = {
+  register,
+};

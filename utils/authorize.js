@@ -24,4 +24,4 @@ function authorize(needPermission) {
   ];
 }
 
-export default authorize;
+module.exports = authorize;
