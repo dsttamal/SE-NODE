@@ -8,116 +8,104 @@ datasource db {
 }
 
 model patient {
-  id            Int             @id @default(autoincrement())
-  full_name     String
-  medicalReport medicalReport[]
+  id                  Int                   @id @default(autoincrement())
+  full_name           String
+  medicalReport       medicalReport[]
   physicalExamination physicalExamination[]
-  labReport     labReport[]
-  gender        String
-  dob           DateTime
-  email         String?
-  phone         String?
-  member_id     String?         @unique @default(cuid())
-  blood_group   String?
-  address       String?
-  reffered_by   String?
-  status        Boolean         @default(true)
-  createdBy     admin           @relation(fields: [createdBy_id], references: [id], name: "patientCreatedBy")
-  createdBy_id  Int
-  updatedBy     admin           @relation(fields: [updatedBy_id], references: [id], name: "patientUpdatedBy")
-  updatedBy_id  Int             @default(0)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @default(now()) @updatedAt
+  labReport           labReport[]
+  gender              String
+  dob                 DateTime
+  email               String?
+  phone               String?
+  blood_group         String?
+  address             String?
+  reffered_by         String?
+  status              Boolean               @default(true)
+  createdBy           admin                 @relation(fields: [createdBy_id], references: [id], name: "patientCreatedBy")
+  createdBy_id        Int
+  updatedBy           admin                 @relation(fields: [updatedBy_id], references: [id], name: "patientUpdatedBy")
+  updatedBy_id        Int                   @default(0)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now()) @updatedAt
 }
 
 model medicalReport {
-  id           Int      @id @default(autoincrement())
-  patient      patient  @relation(fields: [patient_id], references: [id])
-  patient_id   Int
+  id                  Int                   @id @default(autoincrement())
+  patient             patient               @relation(fields: [patient_id], references: [id])
+  patient_id          Int
   physicalExamination physicalExamination[]
-  report_type  String
-  report       String
-  approve     Boolean  @default(false)
-  status       Boolean  @default(true)
-  createdBy    admin    @relation(fields: [createdBy_id], references: [id], name: "medicalReportCreatedBy")
-  createdBy_id  Int
-  updatedBy    admin    @relation(fields: [updatedBy_id], references: [id], name: "medicalReportUpdatedBy")
-  updatedBy_id  Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  report_type         String
+  report              String
+  approve             Boolean               @default(false)
+  status              Boolean               @default(true)
+  createdBy           admin                 @relation(fields: [createdBy_id], references: [id], name: "medicalReportCreatedBy")
+  createdBy_id        Int
+  updatedBy           admin                 @relation(fields: [updatedBy_id], references: [id], name: "medicalReportUpdatedBy")
+  updatedBy_id        Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now()) @updatedAt
 }
+
 model physicalExamination {
-  id           Int      @id @default(autoincrement())
-  patient      patient  @relation(fields: [patient_id], references: [id])
-  patient_id   Int
-  medicalReport medicalReport @relation(fields: [medicalReport_id], references: [id])
+  id               Int           @id @default(autoincrement())
+  patient          patient       @relation(fields: [patient_id], references: [id])
+  patient_id       Int
+  medicalReport    medicalReport @relation(fields: [medicalReport_id], references: [id])
   medicalReport_id Int
-  Temperature Float   @default(0)
-  PulseRate   Float   @default(0)
-  Weight      Float   @default(0)
-  Height      Float   @default(0)
-  BloodPressure   String   @default("")
-  approve     Boolean  @default(false)
-  apporovedBy    admin    @relation(fields: [apporovedBy_id], references: [id], name: "physicalExaminationApporovedBy")
-  apporovedBy_id  Int
-  status       Boolean  @default(true)
-  createdBy    admin    @relation(fields: [createdBy_id], references: [id], name: "physicalExaminationCreatedBy")
-  createdBy_id  Int
-  updatedBy    admin    @relation(fields: [updatedBy_id], references: [id], name: "physicalExaminationUpdatedBy")
-  updatedBy_id  Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  Temperature      Float         @default(0)
+  PulseRate        Float         @default(0)
+  Weight           Float         @default(0)
+  Height           Float         @default(0)
+  BloodPressure    String        @default("")
+  approve          Boolean       @default(false)
+  apporovedBy      admin         @relation(fields: [apporovedBy_id], references: [id], name: "physicalExaminationApporovedBy")
+  apporovedBy_id   Int
+  status           Boolean       @default(true)
+  createdBy        admin         @relation(fields: [createdBy_id], references: [id], name: "physicalExaminationCreatedBy")
+  createdBy_id     Int
+  updatedBy        admin         @relation(fields: [updatedBy_id], references: [id], name: "physicalExaminationUpdatedBy")
+  updatedBy_id     Int
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @default(now()) @updatedAt
 }
 
 model labReport {
-  id           Int      @id @default(autoincrement())
-  patient      patient  @relation(fields: [patient_id], references: [id])
-  patient_id   Int
-  Serology     String
-  Hemoglobin   String
-  BloodSmear  String
-  Urinalysis_SpecificGravity  String
-  Urinalysis_Sugar  String
-  Urinalysis_Albumin  String
-  PAP  String
-  TestGiven DateTime  @default(now())
-  TestSampleTeken DateTime  @default(now())
-  TestResultTaken admin    @relation(fields: [TestResultTakenById], references: [id], name: "labReportTestResultTakenBy")
-  TestResultTakenById Int
-  approve     Boolean  @default(false)
-  apporovedBy    admin    @relation(fields: [apporovedBy_id], references: [id], name: "labReportApporovedBy")
-  apporovedBy_id  Int
-  status       Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  id                         Int      @id @default(autoincrement())
+  patient                    patient  @relation(fields: [patient_id], references: [id])
+  patient_id                 Int
+  Serology                   String
+  Hemoglobin                 String
+  BloodSmear                 String
+  Urinalysis_SpecificGravity String
+  Urinalysis_Sugar           String
+  Urinalysis_Albumin         String
+  PAP                        String
+  TestGiven                  DateTime @default(now())
+  TestSampleTeken            DateTime @default(now())
+  TestResultTaken            admin    @relation(fields: [TestResultTakenById], references: [id], name: "labReportTestResultTakenBy")
+  TestResultTakenById        Int
+  approve                    Boolean  @default(false)
+  apporovedBy                admin    @relation(fields: [apporovedBy_id], references: [id], name: "labReportApporovedBy")
+  apporovedBy_id             Int
+  status                     Boolean  @default(true)
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @default(now()) @updatedAt
 }
 
 model admin {
-  id               Int             @id @default(autoincrement())
-  username         String
-  patientUpdatedBy patient[]       @relation("patientUpdatedBy")
-  patientCreatedBy patient[]       @relation("patientCreatedBy")
-  medicalReportCreatedBy    medicalReport[]      @relation("medicalReportCreatedBy")
-  medicalReportUpdatedBy    medicalReport[]      @relation("medicalReportUpdatedBy")
-  apporovedBy    physicalExamination[]      @relation("physicalExaminationApporovedBy")
-  labReportTestResultTakenBy    labReport[]      @relation("labReportTestResultTakenBy")
-  labReportApporovedBy  labReport[]      @relation("labReportApporovedBy")
-  physicalExaminationCreatedBy    physicalExamination[]      @relation("physicalExaminationCreatedBy")
-  physicalExaminationUpdatedBy    physicalExamination[]      @relation("physicalExaminationUpdatedBy")
-  adminRole        adminRole[]
-  email            String          @unique
-  password         String
-  status           Boolean         @default(true)
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @default(now()) @updatedAt
-}
-
-model adminRole {
-  id        Int      @id @default(autoincrement())
-  admin     admin    @relation(fields: [admin_id], references: [id])
-  admin_id  Int
-  role      String
-  status    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id                           Int                   @id @default(autoincrement())
+  username                     String                @unique
+  patientUpdatedBy             patient[]             @relation("patientUpdatedBy")
+  patientCreatedBy             patient[]             @relation("patientCreatedBy")
+  medicalReportCreatedBy       medicalReport[]       @relation("medicalReportCreatedBy")
+  medicalReportUpdatedBy       medicalReport[]       @relation("medicalReportUpdatedBy")
+  apporovedBy                  physicalExamination[] @relation("physicalExaminationApporovedBy")
+  labReportTestResultTakenBy   labReport[]           @relation("labReportTestResultTakenBy")
+  labReportApporovedBy         labReport[]           @relation("labReportApporovedBy")
+  physicalExaminationCreatedBy physicalExamination[] @relation("physicalExaminationCreatedBy")
+  physicalExaminationUpdatedBy physicalExamination[] @relation("physicalExaminationUpdatedBy")
+  password                     String
+  status                       Boolean               @default(true)
+  createdAt                    DateTime              @default(now())
+  updatedAt                    DateTime              @default(now()) @updatedAt
 }

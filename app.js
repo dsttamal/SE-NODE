@@ -1,8 +1,6 @@
 const rateLimit = require("express-rate-limit");
 const compression = require("compression");
 const express = require("express");
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -13,22 +11,8 @@ const adminRoutes = require("./routes/admin/admin.routes");
 // express app instance
 const app = express();
 
-// swagger options
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: "Node.js API",
-      version: "0.1.0"
-    },
-    // servers: ["http://localhost:8080"],
-  },
-  apis: ["./routes/*/*.routes.js"],
-};
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
 // holds all the allowed origins for cors access
-let allowedOrigins = ["http://localhost:3000", "http://localhost:8080"];
+let allowedOrigins = ["http://se.local", "http://localhost:8080"];
 
 // limit the number of requests from a single IP address
 const limiter = rateLimit({

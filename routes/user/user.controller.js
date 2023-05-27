@@ -9,34 +9,35 @@ const secret = process.env.JWT_SECRET;
 
 const register = async (req, res) => {
   // validate request body
-  if (!req.body.phone || !req.body.password) {
-    return res.status(400).json({ message: "Phone and password required" });
+  if (!req.body.phone || !req.body.full_name) {
+    return res.status(400).json({ message: "Phone and Name required" });
   }
   if (req.body.phone.length !== 11) {
     return res.status(400).json({ message: "Phone number must be 11 digits" });
   }
-  if (req.body.password.length < 6) {
-    return res
-      .status(400)
-      .json({ message: "Password must be at least 6 characters" });
-  }
-  // hash password
-  const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+  const dob = new Date(req.body.dob);
   // create user
-  const newUser = await prisma.user.create({
+  const newUser = await prisma.patient.create({
     data: {
       full_name: req.body.full_name,
       phone: req.body.phone,
-      password: hashedPassword,
       gender: req.body.gender,
-      dob: req.body.dob,
+      dob: dob,
       email: req.body.email,
       blood_group: req.body.blood_group,
       address: req.body.address,
       reffered_by: req.body.reffered_by,
       status: req.body.status,
-      createdBy: req.auth.id,
-      updatedBy: req.auth.id,
+      createdBy: admin.connect({
+        where: {
+          id: req.auth.id,
+        },
+      }),
+      updatedBy: admin.connect({
+        where: {
+          id: req.auth.id,
+        },
+      }),
     },
   });
   if (!newUser) {

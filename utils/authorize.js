@@ -1,7 +1,7 @@
 var { expressjwt: jwt } = require("express-jwt");
-const secret = process.env.JWT_SECRET;
+const secret = "chikon_ho";
 
-function authorize(needPermission) {
+function authorize() {
   return [
     // authenticate JWT token and attach user to request object (req.auth)
     jwt({ secret, algorithms: ["HS256"] }),
@@ -11,12 +11,6 @@ function authorize(needPermission) {
       // check if user is authenticated
       if (!req.auth) {
         return res.status(401).json({ message: "Unauthorized" });
-      }
-      // check the needPermission has the user
-      if (needPermission && !req.auth.permissions.includes(needPermission)) {
-        return res
-          .status(401)
-          .json({ message: "You don't have permission to do this" });
       }
       // authentication and authorization successful so go next
       next();
