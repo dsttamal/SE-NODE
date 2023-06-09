@@ -14,12 +14,13 @@ model patient {
   physicalExamination physicalExamination[]
   labReport           labReport[]
   gender              String
+  marriage            String
   dob                 DateTime
-  email               String?
-  phone               String?
-  blood_group         String?
-  address             String?
-  reffered_by         String?
+  phone               String
+  past_treatment      String
+  blood_group         String
+  address             String
+  reffered_by         String
   status              Boolean               @default(true)
   createdBy           admin                 @relation(fields: [createdBy_id], references: [id], name: "patientCreatedBy")
   createdBy_id        Int
