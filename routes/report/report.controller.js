@@ -88,9 +88,26 @@ const view = async (req, res) => {
   return res.status(200).json({ report: report });
 };
 
+const approve = async (req, res) => {
+  const report = await prisma.medicalReport.update({
+    where: {
+      id: parseInt(req.body.id),
+    },
+    data: {
+      status: true,
+      updatedBy: { connect: { id: req.auth.id } },
+    },
+  });
+  if (!report) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+  return res.status(200).json({ report: report });
+};
+
 module.exports = {
   addReport,
   viewAll,
   viewByUser,
-  view
+  view,
+  approve,
 };
