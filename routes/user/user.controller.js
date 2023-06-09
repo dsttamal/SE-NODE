@@ -29,8 +29,8 @@ const register = async (req, res) => {
       address: req.body.address,
       reffered_by: req.body.reffered_by,
       status: req.body.status,
-      createdBy: { connect: { id: req.auth.id, } },
-      updatedBy: { connect: { id: req.auth.id, } },
+      createdBy: { connect: { id: req.auth.id } },
+      updatedBy: { connect: { id: req.auth.id } },
     },
   });
   if (!newUser) {
@@ -41,6 +41,32 @@ const register = async (req, res) => {
     .json({ newUser: newUser, message: "User created successfully" });
 };
 
+const viewAll = async (req, res) => {
+  const users = await prisma.patient.findMany({
+    where: {
+      status: true,
+    },
+  });
+  if (!users) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+  return res.status(200).json({ users: users });
+};
+
+const view = async (req, res) => {
+  const user = await prisma.patient.findUnique({
+    where: {
+      id: parseInt(req.params.id),
+    },
+  });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  return res.status(200).json({ user: user });
+};
+
 module.exports = {
   register,
+  viewAll,
+  view,
 };
