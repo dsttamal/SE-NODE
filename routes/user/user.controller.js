@@ -28,16 +28,8 @@ const register = async (req, res) => {
       address: req.body.address,
       reffered_by: req.body.reffered_by,
       status: req.body.status,
-      createdBy: admin.connect({
-        where: {
-          id: req.auth.id,
-        },
-      }),
-      updatedBy: admin.connect({
-        where: {
-          id: req.auth.id,
-        },
-      }),
+      createdBy: { connect: { id: req.auth.id, } },
+      updatedBy: { connect: { id: req.auth.id, } },
     },
   });
   if (!newUser) {
