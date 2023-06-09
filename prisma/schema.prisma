@@ -33,7 +33,7 @@ model medicalReport {
   patient             patient               @relation(fields: [patient_id], references: [id])
   patient_id          Int
   bloodReport         Json                  @default("{}")
-  serum               Json                  @default("{}")
+  serumReport         Json                  @default("{}")
   approve             Boolean               @default(false)
   status              Boolean               @default(true)
   createdBy           admin                 @relation(fields: [createdBy_id], references: [id], name: "medicalReportCreatedBy")

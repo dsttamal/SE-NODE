@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const userRoutes = require("./routes/user/user.routes");
 const adminRoutes = require("./routes/admin/admin.routes");
+const reportRoutes = require("./routes/report/report.routes");
 
 /* variables */
 // express app instance
@@ -52,5 +53,6 @@ app.use(express.json({ extended: true }));
 /* Routes */
 app.use("/v1/user", limiter, userRoutes);
 app.use("/v1/admin", limiter, adminRoutes);
+app.use("/v1/report", limiter, reportRoutes);
 
 module.exports = app;
