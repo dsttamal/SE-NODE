@@ -7,6 +7,6 @@ reportRoutes.post("/add", authorize(), addReport);
 reportRoutes.get("/view", authorize(), viewAll);
 reportRoutes.get("/view/user/:id", authorize(), viewByUser);
 reportRoutes.get("/view/:id", view);
-reportRoutes.get("/approve", authorize(), approve);
+reportRoutes.post("/approve", authorize(), approve);
 
 module.exports = reportRoutes;

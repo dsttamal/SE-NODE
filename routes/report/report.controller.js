@@ -94,7 +94,7 @@ const approve = async (req, res) => {
       id: parseInt(req.body.id),
     },
     data: {
-      status: true,
+      approve: true,
       updatedBy: { connect: { id: req.auth.id } },
     },
   });
